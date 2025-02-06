@@ -332,4 +332,6 @@ Each Worker Node has **four key components** that ensure smooth operation:
 5️⃣ **Pod runs successfully** and serves requests! 🎉  
 
 ---
+![Kubernetes Cluster Architecture](https://kubernetes.io/images/docs/kubernetes-cluster-architecture.svg)
+---
 
