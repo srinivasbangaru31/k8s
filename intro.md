@@ -195,7 +195,7 @@ It consists of **five key components:**
 
 **Important Controllers:**  
 - **Node Controller** – Monitors node health and replaces failed nodes.  
-- **Replication Controller** – Ensures the correct number of pod replicas are running.  
+- **Job controller** – Watches for Job objects that represent one-off tasks, then creates Pods to run those tasks to completion.  
 - **Service Account Controller** – Manages authentication tokens for pods.  
 
 **Example:**  
