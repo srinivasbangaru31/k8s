@@ -44,6 +44,14 @@ A **container orchestrator** like **Kubernetes** (used in **EKS – Amazon Elast
 
 ---
 
+### **Challenges Without Container Orchestrators**  
+
+ **Manual Scaling & Management** – You must manually start, stop, and scale containers, making it hard to handle high traffic.  
+ **Lack of Self-Healing** – If a container crashes, you must detect and restart it manually, leading to downtime.  
+ **Complex Networking & Load Balancing** – Managing container-to-container communication and distributing traffic requires manual setup.  
+
+---
+
 ### **Real-World Example: Restaurant Manager 🍽️**  
 Imagine you own a **big restaurant** where:  
 - **Chefs (containers)** cook food.  
