@@ -236,18 +236,6 @@ It consists of **five key components:**
 
 ---
 
-### **Summary of Control Plane Components**  
-
-| Component | Purpose |
-|-----------|---------|
-| **API Server** | Accepts and processes requests (via `kubectl`, dashboards, automation). |
-| **etcd** | Stores all cluster data (state, configuration, deployments). |
-| **Controller Manager** | Ensures the cluster meets the desired state (reschedules failed pods, monitors nodes). |
-| **Scheduler** | Decides where new pods should run based on resource availability. |
-| **Cloud Controller Manager** | Integrates Kubernetes with cloud services (ELB, storage, networking). |
-
----
-
 ### **How They Work Together (Simple Flow)**  
 1. **You Deploy a Pod** (`kubectl apply -f pod.yaml`)  
 2. **API Server** receives the request and stores it in **etcd**.  
