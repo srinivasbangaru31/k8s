@@ -241,7 +241,7 @@ It consists of **five key components:**
 2. **API Server** receives the request and stores it in **etcd**.  
 3. **Scheduler** picks the best node for the pod.  
 4. **Controller Manager** ensures the pod runs properly.  
-5. **The Pod Runs Successfully! **  
+5. **The Pod Runs Successfully!**  
 
 ---
 ### **Detailed Explanation of Kubernetes Worker Node Components**  
