@@ -25,7 +25,7 @@ Example: A biryani recipe you can share with multiple chefs.
 
 #### **3. Container Orchestration (Restaurant Manager)**
 When multiple chefs (containers) work together, someone must coordinate. The **orchestration system** ensures food (containers) is prepared, served, and scaled up or down as needed.  
-Example: **Kubernetes (K8s)**
+Example: **Kubernetes (K8s), Docker Swarn, Amazon ECS, Amazon EKS, Apache Mesos**
 
 #### **4. Container Registry (Fridge )**
 A **container registry** stores multiple recipes (images) for later use.  
