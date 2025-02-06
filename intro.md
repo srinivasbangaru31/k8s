@@ -98,7 +98,7 @@ Kubernetes has two main parts:
 
 ## **2. Worker Node Components (Executes Applications)**  
 
-<img width="859" alt="image" src="https://github.com/user-attachments/assets/aa7d05af-85d2-46ea-9b86-0679a8e7821c" />
+<img width="867" alt="image" src="https://github.com/user-attachments/assets/c13a41ad-ccc0-4a84-91f3-89fc6db3d6ec" />
 
 
 | Component | Purpose / Job |
