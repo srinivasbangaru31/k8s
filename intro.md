@@ -46,3 +46,35 @@ Think of a restaurant:
 ✅ **Efficiency** – Uses fewer resources than traditional virtual machines  
 
 ---
+---
+
+
+### **What is Amazon EKS?**  
+**Amazon Elastic Kubernetes Service (EKS)** is a fully managed Kubernetes service provided by AWS. It helps you deploy, manage, and scale containerized applications using Kubernetes without needing to manage the Kubernetes control plane.
+
+---
+
+### **Comparison: Regular Kubernetes vs. Amazon EKS**  
+
+| Feature | Regular Kubernetes | Amazon EKS |
+|---------|--------------------|------------|
+| **Control Plane Management** | You must set up and maintain the Kubernetes control plane (API server, scheduler, controller manager, etc.). | AWS fully manages the control plane, including scaling, security, and updates. |
+| **Worker Nodes** | You need to provision and manage worker nodes (on-premises or cloud VMs). | You only manage worker nodes; AWS handles the control plane. |
+| **High Availability** | You must configure HA across multiple servers and regions. | AWS automatically runs the control plane across multiple Availability Zones for HA. |
+| **Networking** | Requires setting up Kubernetes networking manually. | Integrates with AWS networking (VPC, ALB, NLB, etc.). |
+| **Security & IAM** | You manage authentication, RBAC, and security policies. | Integrated with AWS IAM, security groups, and encryption for easy access control. |
+| **Upgrades & Patching** | You need to manually upgrade and patch Kubernetes versions. | AWS provides automated upgrades and patches for the control plane. |
+| **Monitoring & Logging** | You must configure tools like Prometheus and Grafana. | Integrated with AWS services like CloudWatch, CloudTrail, and X-Ray. |
+| **Autoscaling** | Requires configuring Cluster Autoscaler manually. | Supports AWS Auto Scaling for nodes and pods with seamless integration. |
+| **Integration with AWS Services** | Requires custom configurations for AWS integrations. | Built-in support for AWS services like ECR, IAM, CloudWatch, and RDS. |
+| **Pricing** | Free, but you pay for the infrastructure you use (compute, storage, etc.). | You pay for worker nodes plus an additional charge of ~$0.10 per hour per EKS cluster. |
+
+---
+
+### **Key Benefits of Amazon EKS**  
+✅ **No Control Plane Management** – AWS handles the Kubernetes control plane.  
+✅ **Highly Available & Scalable** – Built-in multi-AZ deployment.  
+✅ **Better Security** – Integrated with AWS IAM, VPC, and security groups.  
+✅ **Seamless AWS Integration** – Works natively with AWS services.  
+✅ **Automatic Upgrades & Patching** – Reduces operational burden.  
+
