@@ -110,3 +110,41 @@ Now, let’s map this to **EKS**:
 ✅ **Seamless AWS Integration** – Works natively with AWS services.  
 ✅ **Automatic Upgrades & Patching** – Reduces operational burden.  
 
+---
+---
+
+### **Primary Components of Kubernetes (K8s) and Their Purpose**  
+
+Kubernetes has two main parts:  
+
+1️⃣ **Control Plane (Manages the Cluster)**  
+2️⃣ **Worker Nodes (Runs Applications)**  
+
+---
+
+## **1. Control Plane Components (Brain of Kubernetes 🧠)**  
+
+| Component | Purpose / Job |
+|-----------|--------------|
+| **API Server (kube-apiserver)** | The **front door** of Kubernetes; handles all API requests from users and tools (kubectl, dashboards, etc.). |
+| **Controller Manager (kube-controller-manager)** | Ensures the desired state of the cluster (e.g., maintains replicas, replaces failed pods, manages node health). |
+| **Scheduler (kube-scheduler)** | Decides **where** to run new pods based on resource availability. |
+| **etcd (Key-Value Store)** | Stores all cluster data (state, configurations, deployments) in a distributed database. |
+| **Cloud Controller Manager** | Integrates K8s with cloud providers (AWS, Azure, GCP) for managing networking, storage, and load balancers. |
+
+---
+
+## **2. Worker Node Components (Executes Applications 🚀)**  
+
+| Component | Purpose / Job |
+|-----------|--------------|
+| **Kubelet** | Runs on each worker node; communicates with the API server and ensures the node runs assigned containers. |
+| **Container Runtime** | Runs containers on the node (e.g., Docker, containerd, CRI-O). |
+| **Kube Proxy** | Manages networking and ensures pods can communicate with each other and external services. |
+| **Pods** | The smallest unit in Kubernetes; a pod contains one or more containers that share storage and networking. |
+
+---
+
+**Control Plane** – Manages and schedules workloads.  
+**Worker Nodes** – Run the actual applications (containers).  
+
