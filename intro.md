@@ -83,6 +83,9 @@ Kubernetes has two main parts:
 
 ## **1. Control Plane Components (Brain of Kubernetes)**  
 
+<img width="869" alt="image" src="https://github.com/user-attachments/assets/e92181e3-16ea-41c5-8aef-6ca57d13f010" />
+
+
 | Component | Purpose / Job |
 |-----------|--------------|
 | **API Server (kube-apiserver)** | The **front door** of Kubernetes; handles all API requests from users and tools (kubectl, dashboards, etc.). |
@@ -94,6 +97,9 @@ Kubernetes has two main parts:
 ---
 
 ## **2. Worker Node Components (Executes Applications)**  
+
+<img width="859" alt="image" src="https://github.com/user-attachments/assets/aa7d05af-85d2-46ea-9b86-0679a8e7821c" />
+
 
 | Component | Purpose / Job |
 |-----------|--------------|
