@@ -357,3 +357,83 @@ Each Worker Node has **four key components** that ensure smooth operation:
 **Automatic Upgrades & Patching** – Reduces operational burden.  
 
 ---
+ ### **What is a ReplicaSet in Kubernetes?**  
+---
+
+A **ReplicaSet** is a Kubernetes object that ensures a **specified number of identical pod replicas** are always running. If a pod fails or is deleted, the ReplicaSet automatically creates a new one to maintain the desired count.  
+
+---
+
+### **Key Features of ReplicaSet**  
+ **Ensures Pod Availability** – Maintains a fixed number of pod replicas.  
+ **Auto-Recovery** – If a pod crashes, a new one is created.  
+ **Auto-Scaling** – Can be manually scaled up/down.  
+ **No Rolling Updates** – Cannot update existing pods; for updates, use a **Deployment** instead.  
+
+---
+
+### **How ReplicaSet Works (Example Scenario)**  
+
+Imagine you run a **web application** that needs **3 replicas** for **high availability**.  
+
+1️⃣ You define a **ReplicaSet** with `replicas: 3`.  
+2️⃣ Kubernetes **creates 3 identical pods**.  
+3️⃣ If 1 pod **crashes or is deleted**, ReplicaSet **replaces it immediately**.  
+
+---
+
+### **Example: ReplicaSet YAML**
+```yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-replicaset
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+```
+
+**What Happens?**  
+- **Creates 3 pods** with the Nginx container.  
+- If a pod **crashes**, it **creates a new one automatically**.  
+- If a pod is **deleted manually**, ReplicaSet **replaces it**.  
+
+**Limitations of ReplicaSet:**  
+- Cannot **update existing pods** (e.g., rolling out a new version).  
+- Only ensures the **desired number of replicas** but does not support version control.  
+
+---
+
+### **Scaling a ReplicaSet**  
+
+**Manually Scale Up/Down:**  
+```sh
+kubectl scale rs nginx-replicaset --replicas=5
+```
+This increases the pod count from `3` → `5`.  
+
+**Check Running Pods:**  
+```sh
+kubectl get pods
+```
+
+**Delete a Pod & See Auto-Recovery:**  
+```sh
+kubectl delete pod <pod-name>
+```
+ReplicaSet will **immediately create a new pod** to maintain 3 replicas.  
+
+---
+
+### **When Should You Use Deployment Instead?**  
+ReplicaSet **does not support rolling updates** (changing container images). If you want **version updates, rollbacks, or gradual updates**, use a **Deployment**, which internally uses a ReplicaSet.  
