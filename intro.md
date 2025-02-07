@@ -360,15 +360,19 @@ Each Worker Node has **four key components** that ensure smooth operation:
  ### **What is a ReplicaSet in Kubernetes?**  
 ---
 
-A **ReplicaSet** is a Kubernetes object that ensures a **specified number of identical pod replicas** are always running. If a pod fails or is deleted, the ReplicaSet automatically creates a new one to maintain the desired count.  
+A **ReplicaSet** is a Kubernetes object that ensures a **specified number of identical pod replicas** are always running. It acts as a safety net for your applications by automatically replacing failed or deleted Pods, guaranteeing high availability and fault tolerance.
 
 ---
 
 ### **Key Features of ReplicaSet**  
- **Ensures Pod Availability** – Maintains a fixed number of pod replicas.  
- **Auto-Recovery** – If a pod crashes, a new one is created.  
- **Auto-Scaling** – Can be manually scaled up/down.  
- **No Rolling Updates** – Cannot update existing pods; for updates, use a **Deployment** instead.  
+
+| Feature | Description |  
+|---------|-------------|  
+| **Pod Availability** | Maintains the exact number of Pod replicas defined in the `replicas` field. |  
+| **Self-Healing** | Automatically replaces failed, crashed, or deleted Pods to match the desired state. |  
+| **Manual Scaling** | You can scale Pods up/down by updating the `replicas` count (e.g., `kubectl scale`). |  
+| **Label Selector** | Uses labels to identify and manage Pods (e.g., `app: my-web-app`). |  
+| **No Updates** | **Does NOT support rolling updates** – Use a **Deployment** for updating Pods. |  
 
 ---
 
