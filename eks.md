@@ -132,3 +132,25 @@ In Amazon EKS (Elastic Kubernetes Service), the **Control Plane** is managed by 
 | **AWS App Mesh** | Implements a **service mesh** for observability, traffic control, and security in EKS. |
 | **AWS KMS** | Encrypts **secrets, data, and Kubernetes secrets** stored in EKS. |
 
+---
+### **Comparison of EKS Cluster Creation Methods**  
+
+| **Method** | **Infrastructure Control** | **Best For** |
+|------------|----------------|-------------|
+| **eksctl (Preferred)** | Limited (Auto-configured VPC, IAM, Networking) | Quick & production-ready clusters |
+| **AWS Console** | Limited | Beginners, testing |
+| **AWS CLI** | Full Control | Advanced users, scripting |
+| **CloudFormation** |Full Control | Enterprises, repeatable infra |
+| **AWS CDK / Terraform** |Full Control | Large-scale production workloads |
+
+---
+
+### **Why is `eksctl` the Preferred Option?**  
+
+**Fastest way to create an EKS cluster** → No need to manually configure VPC, IAM, or networking.  
+**One command setup** → `eksctl create cluster --name my-cluster --region us-east-1`  
+**YAML support** → Easy to define cluster config in a file for repeatability.  
+**Officially recommended by AWS** → Designed for EKS, built by Weaveworks.  
+**Simplifies Node Group Management** → Easily set up managed/self-managed nodes.  
+**Works well for both Dev and Production** → Automates best practices.  
+
