@@ -115,3 +115,20 @@ In Amazon EKS (Elastic Kubernetes Service), the **Control Plane** is managed by 
 
 ---
 
+### **Most Commonly Used AWS Services with EKS**  
+
+| **AWS Service** | **Usage with EKS** |
+|---------------|----------------|
+| **Amazon VPC** | Provides **networking and security** for EKS clusters. Pods communicate via VPC CNI. |
+| **Elastic Load Balancer (ELB)** | Exposes EKS applications to the internet using **ALB, NLB, or CLB**. |
+| **Amazon EBS** | Used for **persistent storage** with EKS worker nodes. Ideal for databases and stateful apps. |
+| **Amazon EFS** | Provides **shared file storage** for multiple EKS pods, useful for distributed workloads. |
+| **AWS IAM** | Manages **authentication and authorization** for users, roles, and Kubernetes service accounts. |
+| **Amazon RDS & Aurora** | Managed **databases** that EKS applications can connect to for persistent storage. |
+| **Amazon S3** | Stores **logs, backups, and artifacts** for applications running in EKS. |
+| **AWS CloudWatch** | **Monitors logs, metrics, and alarms** for EKS workloads. Integrated with Fluent Bit for logging. |
+| **AWS X-Ray** | Helps with **distributed tracing and debugging** of microservices in EKS. |
+| **AWS Secrets Manager** | Stores **secrets (API keys, credentials, DB passwords)** securely for use in EKS. |
+| **AWS App Mesh** | Implements a **service mesh** for observability, traffic control, and security in EKS. |
+| **AWS KMS** | Encrypts **secrets, data, and Kubernetes secrets** stored in EKS. |
+
