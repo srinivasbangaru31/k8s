@@ -55,3 +55,69 @@
 
 ---
 
+### **EKS Data Plane Options**  
+
+---
+
+In Amazon EKS (Elastic Kubernetes Service), the **Control Plane** is managed by AWS, but you need to choose how your **worker nodes (Data Plane)** run. There are three main options:  
+
+1️⃣ **Amazon EC2 Self-Managed Node Groups**  
+2️⃣ **Amazon EC2 Managed Node Groups**  
+3️⃣ **AWS Fargate**  
+
+---
+
+## **1️⃣ Amazon EC2 Self-Managed Node Groups** (Full Control, More Management)  
+- You manually **provision, configure, and manage** EC2 instances as worker nodes.  
+- You must handle **scaling, updates, and security patches**.  
+- Best for **custom configurations, special instance types, or Spot instances**.  
+- Requires a **custom AMI (Amazon Machine Image)** or an optimized AMI provided by AWS.  
+
+**Use Case**: When you need **full control** over node management.  
+
+---
+
+## **2️⃣ Amazon EC2 Managed Node Groups** (AWS Manages Nodes)  
+- AWS **automatically provisions and manages** EC2 worker nodes.  
+- Supports **automatic updates, scaling, and lifecycle management**.  
+- Uses **Amazon Linux 2 or Bottlerocket** as default AMI.  
+- You only need to **select the instance type and size**.  
+
+**Use Case**: When you **want EC2 flexibility** but without managing updates manually. **Easier autoscaling** compared to self-managed EC2 nodes.  
+
+---
+
+## **3️⃣ AWS Fargate** (Serverless, No Nodes to Manage)  
+- **Fully serverless**—no need to manage EC2 instances.  
+- AWS automatically provisions and scales **pods**, not nodes.  
+- **Pay-per-use** pricing—**only pay for running pods**.  
+- No need to worry about OS patching, scaling, or security updates.  
+
+**Use Case**:  
+- When you want a **fully managed, cost-effective** approach.  
+- For **short-lived workloads, bursty applications, and batch jobs**.  
+- **Best for microservices** that don’t need direct node management.  
+
+---
+
+## **Comparison Chart: EKS Data Plane Options**  
+
+| Feature               | EC2 Self-Managed Nodes | EC2 Managed Nodes | AWS Fargate |
+|-----------------------|----------------------|-------------------|-------------|
+| **Who Manages Nodes?** | **You** | **AWS** | **AWS (No Nodes, Only Pods)** |
+| **Scaling** | Manual or Custom | Auto-managed | Auto-managed |
+| **OS Updates** | Manual | AWS-managed | AWS-managed |
+| **Custom AMI Support** | Yes |  No (AWS AMI only) |  No (AWS manages runtime) |
+| **Pod Density Control** | Yes | Yes |  No (Pods run individually) |
+| **Best For** | Custom setups, Spot Instances | Standard workloads, auto-scaling | Serverless workloads, cost-efficient apps |
+| **Cost** |  High (EC2 cost + management effort) |  Medium (AWS manages updates) |  Low (Pay per pod runtime) |
+| **Ideal Workloads** | High-performance, GPUs, ML workloads | Web apps, backend services | Serverless, microservices |
+
+---
+
+## **Which One Should You Choose?**  
+
+**Use Self-Managed EC2 Nodes** → If you need **custom control, spot instances, or GPUs**.  
+**Use Managed Node Groups** → If you want **simplified management with EC2 flexibility**.  
+**Use AWS Fargate** → If you want **fully serverless, no node management, and pay-per-use**.  
+
