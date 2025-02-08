@@ -12,8 +12,6 @@ Similarly, a **container** packages an application along with its necessary file
 
 ---
 
----
-
 ### **Container Architecture: How It Works (Kitchen Analogy)**  
 Container architecture includes multiple components that work together to manage and run containers, just like a well-organized kitchen operates efficiently to serve meals.  
 
@@ -79,14 +77,6 @@ A **container orchestrator** like **Kubernetes** (used in **EKS – Amazon Elast
  **Complex Networking & Load Balancing** – Managing container-to-container communication and distributing traffic requires manual setup.  
 
 ---
-
-### **Real-World Example: Restaurant Manager**  
-Imagine you own a **big restaurant** where:  
-- **Chefs (containers)** cook food.  
-- **Waiters (networking)** deliver the food to customers.  
-- **The manager (Kubernetes/EKS)** ensures that there are enough chefs, orders are handled properly, and no one is overloaded.  
-
-Now, let’s map this to **K8S**:
 
 | Restaurant Scenario  | K8S Functionality  |
 |----------------|------------------|
