@@ -318,7 +318,33 @@ Each Worker Node has **four key components** that ensure smooth operation:
 ![Kubernetes Cluster Architecture](https://kubernetes.io/images/docs/kubernetes-cluster-architecture.svg)
 
 ---
- ### **What is a ReplicaSet in Kubernetes?**  
+
+---
+### What is a Container?
+A container is a lightweight, standalone, and executable unit of software that includes everything needed to run an application:
+**Code
+Runtime
+System libraries
+Dependencies**
+
+---
+### A Pod is the smallest and simplest deployable unit in Kubernetes. It represents one or more containers.
+
+<img width="384" alt="image" src="https://github.com/user-attachments/assets/5bd555d1-6800-4869-a279-7b1d563fb1b1" />
+
+---
+
+<img width="897" alt="image" src="https://github.com/user-attachments/assets/a5a17cef-1b28-421f-8f26-0b134327fc18" />
+
+---
+
+<img width="720" alt="image" src="https://github.com/user-attachments/assets/5e8509d7-b167-4de8-aa43-e18b8698f7e8" />
+
+
+---
+
+### **What is a ReplicaSet in Kubernetes?**  
+
 ---
 
 A **ReplicaSet** is a Kubernetes object that ensures a **specified number of identical pod replicas** are always running. It acts as a safety net for your applications by automatically replacing failed or deleted Pods, guaranteeing high availability and fault tolerance.
