@@ -576,6 +576,13 @@ Pods in Kubernetes are ephemeral, meaning they can be created, destroyed, or rep
    - **Advantages**:
      - Simple way to expose your application externally.
      - Works without a cloud provider.
+---
+
+<img width="672" alt="image" src="https://github.com/user-attachments/assets/3d473a43-caee-4a8d-97bd-f1fa7dd1cbe1" />
+
+
+---
+
 
    Example YAML:
    ```yaml
@@ -600,6 +607,14 @@ Pods in Kubernetes are ephemeral, meaning they can be created, destroyed, or rep
    - **Advantages**:
      - Automatically provisions a load balancer.
      - Handles traffic distribution across multiple nodes.
+
+---
+
+<img width="676" alt="image" src="https://github.com/user-attachments/assets/b7a5f3fa-4c49-458e-a1b7-303fdd4d6698" />
+
+
+---
+
 
    Example YAML:
    ```yaml
