@@ -532,6 +532,13 @@ Pods in Kubernetes are ephemeral, meaning they can be created, destroyed, or rep
 
 ---
 
+### How Services Work:
+1. **Selector**: A Service uses a `selector` to identify the Pods it should route traffic to. For example, if the selector is `app: my-app`, the Service will route traffic to all Pods with the label `app: my-app`.
+2. **Endpoints**: Kubernetes automatically creates an `Endpoints` object that lists the IPs and ports of the Pods matching the selector.
+3. **kube-proxy**: The `kube-proxy` component running on each node ensures that the Service IP is reachable and routes traffic to the correct Pods.
+
+---
+
 <img width="749" alt="image" src="https://github.com/user-attachments/assets/c1168d7a-a541-45f3-a04d-b094b4f80223" />
 
 
@@ -632,24 +639,6 @@ Pods in Kubernetes are ephemeral, meaning they can be created, destroyed, or rep
          targetPort: 9376
    ```
 
-4. **ExternalName**
-   - **What it does**: Maps the Service to a DNS name (e.g., an external service outside the cluster). It does not proxy traffic but instead returns a CNAME record.
-   - **Use case**: When you want to provide a Kubernetes Service that points to an external service (e.g., a database hosted outside the cluster).
-   - **Advantages**:
-     - Abstracts external services as if they were internal.
-     - No need to hard-code external service endpoints in your application.
-
-   Example YAML:
-   ```yaml
-   apiVersion: v1
-   kind: Service
-   metadata:
-     name: my-service
-   spec:
-     type: ExternalName
-     externalName: my.database.example.com
-   ```
-
 ---
 
 ### Key Advantages of Services:
@@ -658,13 +647,6 @@ Pods in Kubernetes are ephemeral, meaning they can be created, destroyed, or rep
 3. **Decoupling**: Applications don’t need to know about individual Pods; they just communicate with the Service.
 4. **Scalability**: Easily scale your application up or down without affecting clients.
 5. **Flexibility**: Different Service types allow you to expose your application in various ways (internally, externally, or to specific endpoints).
-
----
-
-### How Services Work:
-1. **Selector**: A Service uses a `selector` to identify the Pods it should route traffic to. For example, if the selector is `app: my-app`, the Service will route traffic to all Pods with the label `app: my-app`.
-2. **Endpoints**: Kubernetes automatically creates an `Endpoints` object that lists the IPs and ports of the Pods matching the selector.
-3. **kube-proxy**: The `kube-proxy` component running on each node ensures that the Service IP is reachable and routes traffic to the correct Pods.
 
 ---
 
