@@ -567,7 +567,7 @@ Pods in Kubernetes are ephemeral, meaning they can be created, destroyed, or rep
      ports:
        - protocol: TCP
          port: 80
-         targetPort: 9376
+         targetPort: 80
    ```
 
 2. **NodePort**
@@ -589,9 +589,9 @@ Pods in Kubernetes are ephemeral, meaning they can be created, destroyed, or rep
        app: my-app
      ports:
        - protocol: TCP
+         nodePort: 30000
          port: 80
-         targetPort: 9376
-         nodePort: 30007
+         targetPort: 80
    ```
 
 3. **LoadBalancer**
