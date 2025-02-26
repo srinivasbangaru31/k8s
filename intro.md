@@ -532,6 +532,11 @@ Pods in Kubernetes are ephemeral, meaning they can be created, destroyed, or rep
 
 ---
 
+<img width="749" alt="image" src="https://github.com/user-attachments/assets/c1168d7a-a541-45f3-a04d-b094b4f80223" />
+
+
+---
+
 ### Types of Services in Kubernetes:
 
 1. **ClusterIP** (Default)
@@ -540,6 +545,14 @@ Pods in Kubernetes are ephemeral, meaning they can be created, destroyed, or rep
    - **Advantages**:
      - Secure, as it is not accessible from outside the cluster.
      - Provides a stable IP and DNS name for internal communication.
+
+<img width="624" alt="image" src="https://github.com/user-attachments/assets/19d3e498-84a1-4c88-bb52-dbf1e5b9e9a8" />
+
+---
+
+<img width="508" alt="image" src="https://github.com/user-attachments/assets/eaeb2d74-f4f4-4332-b7d1-5064860dbd21" />
+
+---
 
    Example YAML:
    ```yaml
