@@ -52,6 +52,25 @@
 | **Integration with AWS Services** | Requires custom configurations for AWS integrations. | Built-in support for AWS services like ECR, IAM, CloudWatch, and RDS. |
 | **Pricing** | Free, but you pay for the infrastructure you use (compute, storage, etc.). | You pay for worker nodes plus an additional charge of ~$0.10 per hour per EKS cluster. |
 
+---
+
+Under the hood, AWS **Elastic Kubernetes Service (EKS)** manages the **Kubernetes control plane** across multiple **Availability Zones (AZs)** to ensure **high availability and fault tolerance**.
+
+**EKS runs three master node copies spanning three AZs**, providing **99.95% uptime SLA** for the Kubernetes API server.
+
+### **Master Node Architecture in AWS EKS:**
+
+   AWS EKS runs **three copies** of the Kubernetes control plane across **three different AZs** in the selected AWS Region.
+   - The control plane nodes are **distributed** across **three AZs** to prevent a single point of failure.  
+   - If one AZ goes down, the other two can continue handling requests.  
+   - AWS handles **scaling**, **patching**, and **failure recovery** of the master nodes.  
+   - Users **do not have access** to these control plane nodes.
+   - The control plane communicates with worker nodes using an **Amazon VPC endpoint**, ensuring **low latency** and **secure communication**.
+
+---
+
+<img width="983" alt="image" src="https://github.com/user-attachments/assets/908b7b50-5084-49ba-86d0-5334969b738d" />
+
 
 ---
 
