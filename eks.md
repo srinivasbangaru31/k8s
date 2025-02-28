@@ -178,7 +178,7 @@ In Amazon EKS (Elastic Kubernetes Service), the **Control Plane** is managed by 
 | **Command** | **Brief Description** |
 |------------|----------------------|
 | `eksctl create cluster` | Creates an EKS cluster with a default configuration, including one node group with two `m5.large` nodes. |
-| `eksctl create cluster --name <name> --version 1.15 --node-type t3.micro --nodes 2` | Creates an EKS cluster with Kubernetes version `1.31`, using a node group with two `t3.micro` nodes. |
+| `eksctl create cluster --name <name> --version 1.31 --node-type t3.micro --nodes 2` | Creates an EKS cluster with Kubernetes version `1.31`, using a node group with two `t3.micro` nodes. |
 | `eksctl create cluster --name <name> --fargate` | Creates an EKS cluster with **Fargate**, enabling serverless compute for running pods without managing worker nodes. |
 
 
