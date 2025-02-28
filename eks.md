@@ -172,3 +172,31 @@ In Amazon EKS (Elastic Kubernetes Service), the **Control Plane** is managed by 
 **Officially recommended by AWS** → Designed for EKS, built by Weaveworks.  
 **Simplifies Node Group Management** → Easily set up managed/self-managed nodes.  
 **Faster and More Efficient** – It creates an EKS cluster with a single command, saving time compared to using AWS Management Console or manual `kubectl` and CloudFormation configurations.  
+
+---
+
+| **Command** | **Brief Description** |
+|------------|----------------------|
+| `eksctl create cluster` | Creates an EKS cluster with a default configuration, including one node group with two `m5.large` nodes. |
+| `eksctl create cluster --name <name> --version 1.15 --node-type t3.micro --nodes 2` | Creates an EKS cluster with Kubernetes version `1.31`, using a node group with two `t3.micro` nodes. |
+| `eksctl create cluster --name <name> --fargate` | Creates an EKS cluster with **Fargate**, enabling serverless compute for running pods without managing worker nodes. |
+
+
+## eksctl & kubectl
+
+| **Feature**  | **eksctl** | **kubectl** |
+|-------------|-----------|------------|
+| **Purpose**  | Used for creating and managing **EKS** clusters and node groups. | Used for managing Kubernetes workloads and resources (pods, deployments, services, etc.) across **any** Kubernetes cluster. |
+| **Scope**    | **Only for Amazon EKS**. | Works with **all** Kubernetes clusters, including EKS, self-managed, and other cloud K8s providers. |
+| **Functionality** | Automates EKS cluster setup, including VPC, IAM, and node groups. | Interacts with the Kubernetes API to deploy, manage, and inspect resources. |
+
+
+### **Prerequisites to Install `eksctl`**  
+
+1. **AWS CLI** – Must be installed and configured with credentials (`aws configure`).  
+2. **kubectl** – Required for managing Kubernetes resources after cluster creation.  
+3. **AWS IAM Permissions** – User must have IAM permissions to create and manage EKS clusters.  
+
+
+
+
