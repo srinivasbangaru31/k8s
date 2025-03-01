@@ -42,7 +42,11 @@ To apply the changes, run:
 ```sh
 source ~/.bashrc
 ```
+To verify installation, run:
 
+```sh
+kubectl version
+```
 ---
 
 ## Installing eksctl
