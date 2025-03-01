@@ -92,5 +92,104 @@ eksctl version
 
 ---
 
-## Conclusion
-By following these steps, you have successfully installed `kubectl` and `eksctl`, which are essential tools for managing Kubernetes clusters on AWS EKS. Always refer to the official documentation for the latest updates and best practices.
+## **1. Creating an EKS Cluster**  
+To create an EKS cluster with `eksctl`:  
+```bash
+eksctl create cluster --name=ekswithavinash \
+  --version 1.31 \
+  --region=ap-south-1 \
+  --zones=ap-south-1a,ap-south-1b \
+  --nodegroup-name ng-default \
+  --node-type t3.small \
+  --nodes 2
+```
+
+### **Alternative: Using a Config File**  
+Instead of specifying all parameters in the command, you can create a YAML configuration file (`eksctl-create.yaml`) and use:  
+```bash
+eksctl create cluster --config-file=eksctl-create.yaml
+```
+
+---
+
+## **2. Managing Clusters**  
+
+### **List all EKS Clusters**  
+```bash
+eksctl get cluster
+```
+  
+### **View All Resources in the Cluster**  
+```bash
+kubectl get all
+```
+
+### **Delete an EKS Cluster**  
+```bash
+eksctl delete cluster --name=ekswithavinash
+```
+
+---
+
+## **3. Deploying an Application**  
+
+### **Apply a Deployment Manifest**  
+Deploy an application using a Kubernetes deployment YAML file:  
+```bash
+kubectl apply -f nginx-deploy.yaml
+```
+
+### **View All Deployments**  
+```bash
+kubectl get deployments
+```
+
+### **Get Detailed Information About a Deployment**  
+```bash
+kubectl describe deployment <deployment-name>
+```
+
+---
+
+## **4. Working with Nodes**  
+
+### **List All Nodes in the Cluster**  
+```bash
+kubectl get nodes
+```
+
+### **Describe a Specific Node**  
+```bash
+kubectl describe node <node-name>
+```
+
+---
+
+## **5. Working with Pods**  
+
+### **List All Pods**  
+```bash
+kubectl get pods
+```
+
+### **List All Pods in All Namespaces**  
+```bash
+kubectl get pods --all-namespaces
+```
+
+### **View Pod Logs**  
+```bash
+kubectl logs <pod-name>
+```
+
+### **Stream Logs from a Running Pod**  
+```bash
+kubectl logs -f <pod-name>
+```
+
+### **Delete a Pod**  
+```bash
+kubectl delete pod <pod-name>
+```
+
+---
