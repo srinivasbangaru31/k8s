@@ -101,13 +101,29 @@ eksctl create cluster --name=ekswithavinash \
   --zones=ap-south-1a,ap-south-1b \
   --nodegroup-name ng-default \
   --node-type t3.small \
-  --nodes 2
+  --nodes 2 \
+  --managed
 ```
 
 ### **Alternative: Using a Config File**  
 Instead of specifying all parameters in the command, you can create a YAML configuration file (`eksctl-create.yaml`) and use:  
 ```bash
 eksctl create cluster --config-file=eksctl-create.yaml
+```
+
+### **If you want to create a node group manually**
+Create a node group manually, we can use below command.
+
+```bash
+eksctl create nodegroup \
+  --cluster ekswithavinash \
+  --name managed-ng \
+  --node-type t3.small \
+  --nodes 2 \
+  --nodes-min 1 \
+  --nodes-max 3 \
+  --node-ami-family AmazonLinux2 \
+  --region ap-south-1
 ```
 
 ---
