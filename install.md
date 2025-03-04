@@ -125,6 +125,48 @@ eksctl create nodegroup \
   --node-ami-family AmazonLinux2 \
   --region ap-south-1
 ```
+---
+
+### **What is an IAM OIDC Provider in AWS EKS?**
+The **IAM OpenID Connect (OIDC) Provider** allows **AWS Identity and Access Management (IAM)** to authenticate **Kubernetes service accounts** and assign **AWS IAM permissions** to them.  
+
+In simple terms, it helps your EKS workloads securely access AWS services **without using static IAM credentials**.
+
+---
+
+## **How to Associate an IAM OIDC Provider in EKS?**
+
+### **Step 1: Check if OIDC Provider Exists**
+Run:
+
+```bash
+aws eks describe-cluster --name ekswithavinash --region ap-south-1 --query "cluster.identity.oidc.issuer" --output text
+```
+If an **OIDC URL** is returned, it already exists. If **empty**, you need to create it.
+
+---
+
+### **Step 2: Create IAM OIDC Provider (If Not Exists)**
+
+```bash
+eksctl utils associate-iam-oidc-provider \
+  --region ap-south-1 \
+  --cluster ekswithavinash \
+  --approve
+```
+
+This registers the **OIDC provider** with IAM.
+
+---
+
+### **Step 3: Verify IAM OIDC Provider**
+Run:
+
+```bash
+aws iam list-open-id-connect-providers | grep $(aws eks describe-cluster --name ekswithavinash --region ap-south-1 --query "cluster.identity.oidc.issuer" --output text | sed 's|https://||')
+```
+
+If it returns an `arn:aws:iam::xxxxx:oidc-provider/`, OIDC is successfully associated.
 
 ---
 
