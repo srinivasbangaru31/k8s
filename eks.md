@@ -198,16 +198,3 @@ In Amazon EKS (Elastic Kubernetes Service), the **Control Plane** is managed by 
 3. **AWS IAM Permissions** – User must have IAM permissions to create and manage EKS clusters.  
 
 ---
-
-eksctl create nodegroup \
-  --cluster ekswithavinash \
-  --name managed-ng \
-  --node-type t3.small \
-  --nodes 2 \
-  --nodes-min 1 \
-  --nodes-max 3 \
-  --node-ami-family AmazonLinux2 \
-  --region ap-south-1
-
-
-
