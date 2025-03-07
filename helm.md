@@ -116,6 +116,137 @@ helm rollback my-app 1
 
 ---
 
+### **Step by Step guide to install Httpd and delivering""
+
+---
+
+## **1. Install Helm (if not already installed)**
+If Helm is not installed, install it using:  
+```sh
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+```
+Verify installation:  
+```sh
+helm version
+```
+
+---
+
+## **2. Add the `hackcoderr-httpd` Helm Repository**
+Since you're using the `hackcoderr-httpd/httpd` chart, first add the repository:  
+```sh
+helm repo add hackcoderr-httpd https://hackcoderr.github.io/helm-charts/
+helm repo update
+```
+
+---
+
+## **3. Install the HTTPD Helm Chart**
+Run the following command to deploy Apache (`httpd`):  
+```sh
+helm install my-httpd hackcoderr-httpd/httpd --version 0.1.0
+```
+This will deploy **httpd** in your Kubernetes cluster.
+
+---
+
+## **4. Verify the Deployment**
+Check if the pods and services are running:  
+```sh
+kubectl get all
+```
+Expected output:
+```
+NAME                                 READY   STATUS    RESTARTS   AGE
+pod/my-httpd-xxxxxx                  1/1     Running   0          1m
+
+NAME                     TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+service/my-httpd         ClusterIP      10.100.162.249   <none>        80/TCP         1m
+```
+
+---
+
+## **5. Access the HTTPD Pod**
+Find your pod name:
+```sh
+kubectl get pods
+```
+Example output:
+```
+NAME                          READY   STATUS    RESTARTS   AGE
+my-httpd-7d8f76fb69-9vgmm     1/1     Running   0          5m
+```
+Connect to the pod:
+```sh
+kubectl exec -it my-httpd-7d8f76fb69-9vgmm -- /bin/sh
+```
+
+---
+
+## **6. Modify the Default Web Page**
+Since `vi`, `vim`, or `nano` are not available, use `echo` to modify the file:
+```sh
+echo "Hello from Avinash Reddy, Your HTTPD is running!" > /var/www/html/index.html
+```
+Verify the change:
+```sh
+cat /var/www/html/index.html
+```
+
+---
+
+## **7. Expose HTTPD to the Internet (Change Service to LoadBalancer)**
+By default, the service is of type **ClusterIP**. Change it to **LoadBalancer** to make it accessible publicly.  
+
+Edit the service:
+```sh
+kubectl edit svc my-httpd
+```
+Find the `spec.type` field and change it to:
+```yaml
+spec:
+  type: LoadBalancer
+```
+Save and exit.
+
+OR delete and create a new service:
+```sh
+kubectl delete svc my-httpd
+kubectl expose deployment my-httpd --type=LoadBalancer --name=my-httpd --port=80 --target-port=80
+```
+
+---
+
+## **8. Get the Public IP and Access HTTPD**
+Check if an **EXTERNAL-IP** is assigned:
+```sh
+kubectl get svc my-httpd
+```
+Example output:
+```
+NAME       TYPE           CLUSTER-IP       EXTERNAL-IP        PORT(S)        AGE
+my-httpd   LoadBalancer   10.100.162.249   3.109.225.100      80/TCP         5m
+```
+Now, access HTTPD in a browser:
+```
+http://<EXTERNAL-IP>
+```
+It should display:
+```
+Hello from Avinash Reddy, Your HTTPD is running!
+```
+
+---
+
+### **9. Clean Up (Optional)**
+To delete the deployment:
+```sh
+helm uninstall my-httpd
+```
+
+
+---
+
 
 | **Command** | **Syntax** | **Example Command** | **Description** |
 |------------|-----------|----------------------|----------------|
