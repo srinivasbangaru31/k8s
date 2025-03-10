@@ -62,8 +62,6 @@ kubectl apply -f php-apache.yaml
 
 Verify deployment and service:
 ```sh
-kubectl get all
-kubectl get svc
 kubectl describe svc php-apache
 kubectl describe deployment php-apache
 ```
