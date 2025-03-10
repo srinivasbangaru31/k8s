@@ -249,5 +249,40 @@ kubectl logs -f <pod-name>
 ```bash
 kubectl delete pod <pod-name>
 ```
-
 ---
+### K8s Basic and Important commands
+
+| **Category** | **Command** | **Description** |
+|-------------|------------|----------------|
+| **Cluster Information** | `kubectl cluster-info` | Displays cluster information. |
+| | `kubectl version` | Shows Kubernetes client and server versions. |
+| **Working with Nodes** | `kubectl get nodes` | Lists all nodes in the cluster. |
+| | `kubectl describe node <node-name>` | Displays detailed information about a specific node. |
+| **Working with Pods** | `kubectl get pods` | Lists all pods in the default namespace. |
+| | `kubectl get pods --all-namespaces` | Lists all pods across all namespaces. |
+| | `kubectl describe pod <pod-name>` | Displays detailed information about a pod. |
+| | `kubectl logs <pod-name>` | Fetches logs from a pod. |
+| | `kubectl logs -f <pod-name>` | Streams logs from a pod. |
+| | `kubectl exec -it <pod-name> -- <command>` | Executes a command inside a running pod. |
+| | `kubectl exec -it <pod-name> -- /bin/sh` | Opens a shell session inside a pod. |
+| | `kubectl delete pod <pod-name>` | Deletes a pod. |
+| **Working with Deployments** | `kubectl get deployments` | Lists all deployments. |
+| | `kubectl apply -f <deployment-file.yaml>` | Creates or updates a deployment from a YAML file. |
+| | `kubectl scale deployment <deployment-name> --replicas=<number>` | Scales a deployment. |
+| | `kubectl delete deployment <deployment-name>` | Deletes a deployment. |
+| **Managing Resources** | `kubectl apply -f <file.yaml>` | Applies a YAML configuration. |
+| | `kubectl delete -f <file.yaml>` | Deletes resources defined in a YAML file. |
+| | `kubectl edit <resource-type> <resource-name>` | Edits a resource directly. |
+| **Working with Services** | `kubectl get services` | Lists all services. |
+| | `kubectl apply -f <service-file.yaml>` | Creates a service from a YAML file. |
+| | `kubectl delete service <service-name>` | Deletes a service. |
+| **Debugging & Troubleshooting** | `kubectl describe <resource-type> <resource-name>` | Describes a Kubernetes resource. |
+| | `kubectl get events` | Displays cluster events. |
+| | `kubectl port-forward <pod-name> <local-port>:<pod-port>` | Forwards a local port to a pod. |
+| **Miscellaneous** | `kubectl get all` | Lists all resources in the cluster. |
+| | `kubectl top nodes` | Displays resource usage of nodes. |
+| | `kubectl top pods` | Displays resource usage of pods. |
+| **Cleanup** | `kubectl delete pods --all -n <namespace-name>` | Deletes all pods in a namespace. |
+| | `kubectl delete all --all -n <namespace-name>` | Deletes all resources in a namespace. |
+
+
