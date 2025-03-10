@@ -91,7 +91,10 @@ kubectl get deployment php-apache
 kubectl get pods
 ```
 
-## Step 5: Deploy Metrics Server (If Not Already Installed)
+**In the terminal where you created the Pod that runs a busybox image, terminate the load generation by typing <Ctrl> + C.**
+
+
+Deploy Metrics Server (If Not Already Installed)
 Check if the metrics server is running:
 ```sh
 kubectl get deployment metrics-server -n kube-system
