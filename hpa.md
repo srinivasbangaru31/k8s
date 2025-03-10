@@ -78,7 +78,8 @@ kubectl get hpa
 ```
 
 ## Step 4: Generate Load
-Run a load generator to simulate traffic:
+Run a load generator to simulate traffic. This command continuously sends HTTP requests to php-apache, simulating high traffic load. The HPA monitors the CPU usage and, if it exceeds the threshold (50% in this case), Kubernetes scales up the number of pods automatically.
+
 ```sh
 kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
 ```
