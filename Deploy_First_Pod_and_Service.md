@@ -18,6 +18,40 @@ spec:
       ports:
         - containerPort: 80
 ```
+
+**annotated version of the nginx-pod.yaml**
+
+```yaml
+# Specifies the API version to use for this Kubernetes resource.
+# 'v1' is the core API version that includes basic objects like Pods, Services, ConfigMaps, etc.
+apiVersion: v1  
+
+# Defines the type of Kubernetes resource being created.
+# Here, we are creating a 'Pod'.
+kind: Pod  
+
+# Metadata section provides identifying information about the Pod.
+metadata:  
+  # Name of the Pod (should be unique within the namespace).
+  name: nginx-pod  
+
+  # Labels help categorize and select Kubernetes resources.
+  # Here, we label the Pod with 'app: nginx' for easier identification.
+  labels:  
+    app: nginx  
+
+# Specification section that defines the desired state of the Pod.
+spec:  
+  # The list of containers to run inside the Pod.
+  containers:  
+    - name: nginx-container  # Name of the container (useful for logging and debugging).
+      image: nginx  # The Docker image to use for the container (nginx is a lightweight web server).
+      
+      # List of ports that the container exposes.
+      ports:  
+        - containerPort: 80  # Exposes port 80 inside the container (HTTP traffic).
+```
+
 #### **Apply the Pod**
 ```sh
 kubectl apply -f nginx-pod.yaml
