@@ -134,7 +134,7 @@ kubectl get pods
 
 ---
 
-### **Create a Service to Expose the Deployment**
+### **Create a Service to Expose the Deployment with NodePort Option**
 #### **`nginx-service.yaml`**
 ```yaml
 apiVersion: v1
@@ -171,3 +171,34 @@ kubectl describe service nginx-service
   ```
   http://<your-cluster-node-ip>:<node-port>
   ```
+
+  ---
+
+### **Create a Service to Expose the Deployment with NodePort Option**
+
+#### **`nginx-service-elb.yaml`**
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+```
+
+#### **Apply the Service**
+```sh
+kubectl apply -f nginx-service.yaml
+```
+#### **Verify the Service**
+```sh
+kubectl get services
+kubectl describe service nginx-service
+```
