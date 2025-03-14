@@ -279,6 +279,7 @@ spec:
       containers:
         - name: nodeapp
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command: ["node", "-e", "require('http').createServer((req, res) => res.end('Hello from Node.js!')).listen(3000)"]
           ports:
             - containerPort: 3000
 ```
