@@ -1,6 +1,6 @@
 # Horizontal Pod Autoscaling (HPA)
 
-**HPA (Horizontal Pod Autoscaler) in Kubernetes** automatically scales the number of pods based on CPU, memory, or custom metrics to handle variable workloads efficiently. 🚀  
+**HPA (Horizontal Pod Autoscaler) in Kubernetes** automatically scales the number of pods based on CPU, memory, or custom metrics to handle variable workloads efficiently. 
 
  **Example:**  
  - If CPU usage exceeds **50%**, HPA increases pod count.  
