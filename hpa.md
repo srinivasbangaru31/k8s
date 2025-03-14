@@ -1,3 +1,107 @@
+# Understand Requests and Limits and HPA
+
+---
+### **CPU Requests and Limits in Kubernetes**  
+---
+
+### **What does `200m` and `500m` mean in Kubernetes CPU requests/limits?**  
+- **`m` stands for "millicores"`**  
+- **`1 CPU = 1000m` (1000 millicores)**  
+- Kubernetes uses millicores to allow fine-grained CPU allocation.  
+
+### **How is it calculated?**  
+- `200m` = **200 millicores** = **0.2 CPU**  
+- `500m` = **500 millicores** = **0.5 CPU**  
+- `1000m` = **1 CPU core**  
+- `2000m` = **2 CPU cores**  
+
+So, when you set:  
+```yaml
+resources:
+  requests:
+    cpu: 200m  # 0.2 CPU (Minimum required)
+  limits:
+    cpu: 500m  # 0.5 CPU (Maximum allowed)
+```
+This means:
+- The container **gets at least 0.2 of a CPU core**.  
+- The container **can use up to 0.5 of a CPU core**, but not more.  
+
+---
+
+### **Why is it in `m` (millicores) instead of full cores?**  
+Kubernetes runs multiple containers on a single node. Instead of assigning **whole CPU cores**, it allows **fractions of a core**, so small applications don’t waste resources.
+
+Example:
+- A **small app** might only need `100m` (0.1 CPU).
+- A **database** might need `2 CPU` (`2000m`).
+- If you only had full cores (1, 2, etc.), small apps would waste resources.
+
+---
+
+### **Example**  
+Imagine your node has **4 CPU cores** (**4000m CPU**).  
+- You deploy **10 small containers**, each with `200m` CPU.  
+- Each container gets **0.2 CPU**, so Kubernetes can run **20 such containers** on a **4-core machine**.
+
+---
+
+- **1 CPU = 1000m**
+- **200m = 0.2 CPU**
+- **500m = 0.5 CPU**
+- Millicores allow fine-grained CPU allocation in Kubernetes.
+
+---
+
+
+---
+### **Memory Requests and Limits in Kubernetes**  
+---
+ 
+ Memory is measured in **bytes** and commonly specified in:  
+ - **Mi (Mebibytes) → 1 Mi = 1024 KiB = 1024 × 1024 bytes**  
+ - **Gi (Gibibytes) → 1 Gi = 1024 Mi = 1024 × 1024 × 1024 bytes**  
+ - You can also use `M` (Megabytes) or `G` (Gigabytes), but `Mi` and `Gi` are recommended for accuracy.  
+
+ ---
+
+ ### **Example**
+ ```yaml
+ resources:
+   requests:
+     memory: "256Mi"  # Minimum required (256 Mebibytes)
+   limits:
+     memory: "512Mi"  # Maximum allowed (512 Mebibytes)
+ ```
+ This means:  
+ - The container **is guaranteed at least `256Mi`** (256 MB).  
+ - The container **can use up to `512Mi`**, but not more.  
+
+ ---
+
+ ### **Example**  
+ - A **small Node.js app** might need:  
+   ```yaml
+   requests:
+     cpu: "100m"    # 0.1 CPU
+     memory: "128Mi" # 128 MB
+   limits:
+     cpu: "500m"    # 0.5 CPU
+     memory: "256Mi" # 256 MB
+   ```
+ - A **MySQL database** might need:  
+   ```yaml
+   requests:
+     cpu: "500m"    # 0.5 CPU
+     memory: "1Gi"  # 1 GB
+   limits:
+     cpu: "2"       # 2 CPUs
+     memory: "4Gi"  # 4 GB
+   ```
+
+ ---
+
+
 # Horizontal Pod Autoscaling (HPA) Testing:
 
 ## Prerequisites
