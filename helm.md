@@ -66,19 +66,7 @@ helm uninstall my-nginx
 
 ---
 
-## **1. Install Helm (if not already installed)**
-If Helm is not installed, install it using:  
-```sh
-curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-```
-Verify installation:  
-```sh
-helm version
-```
-
----
-
-## **2. Add the `hackcoderr-httpd` Helm Repository**
+## **1. Add the `hackcoderr-httpd` Helm Repository**
 Since you're using the `hackcoderr-httpd/httpd` chart, first add the repository:  
 ```sh
 helm repo add hackcoderr-httpd https://hackcoderr.github.io/helm-charts/
@@ -87,7 +75,7 @@ helm repo update
 
 ---
 
-## **3. Install the HTTPD Helm Chart**
+## **2. Install the HTTPD Helm Chart**
 Run the following command to deploy Apache (`httpd`):  
 ```sh
 helm install my-httpd hackcoderr-httpd/httpd --version 0.1.0
@@ -96,7 +84,7 @@ This will deploy **httpd** in your Kubernetes cluster.
 
 ---
 
-## **4. Verify the Deployment**
+## **3. Verify the Deployment**
 Check if the pods and services are running:  
 ```sh
 kubectl get all
@@ -112,7 +100,7 @@ service/my-httpd         ClusterIP      10.100.162.249   <none>        80/TCP   
 
 ---
 
-## **5. Access the HTTPD Pod**
+## **4. Access the HTTPD Pod**
 Find your pod name:
 ```sh
 kubectl get pods
@@ -129,7 +117,7 @@ kubectl exec -it my-httpd-7d8f76fb69-9vgmm -- /bin/sh
 
 ---
 
-## **6. Modify the Default Web Page**
+## **5. Modify the Default Web Page**
 Since `vi`, `vim`, or `nano` are not available, use `echo` to modify the file:
 ```sh
 echo "Hello from Avinash Reddy, Your HTTPD is running!" > /var/www/html/index.html
@@ -141,7 +129,7 @@ cat /var/www/html/index.html
 
 ---
 
-## **7. Expose HTTPD to the Internet (Change Service to LoadBalancer)**
+## **6. Expose HTTPD to the Internet (Change Service to LoadBalancer)**
 By default, the service is of type **ClusterIP**. Change it to **LoadBalancer** to make it accessible publicly.  
 
 Edit the service:
@@ -163,7 +151,7 @@ kubectl expose deployment my-httpd --type=LoadBalancer --name=my-httpd --port=80
 
 ---
 
-## **8. Get the Public IP and Access HTTPD**
+## **7. Get the Public IP and Access HTTPD**
 Check if an **EXTERNAL-IP** is assigned:
 ```sh
 kubectl get svc my-httpd
@@ -184,15 +172,11 @@ Hello from Avinash Reddy, Your HTTPD is running!
 
 ---
 
-### **9. Clean Up (Optional)**
+### **8. Clean Up**
 To delete the deployment:
 ```sh
 helm uninstall my-httpd
 ```
-
-
-
-
 
 ---
 
