@@ -269,7 +269,7 @@ helm uninstall my-httpd
 | **Package a Helm chart** | `helm package <chart-directory>` | `helm package my-custom-chart/` | Packages a Helm chart into a `.tgz` archive for distribution. |
 | **View history of a Helm release** | `helm history <release-name>` | `helm history my-nginx` | Shows the revision history of a Helm release. |
 | **Rollback to a previous release** | `helm rollback <release-name> <revision>` | `helm rollback my-nginx 2` | Rolls back a Helm release to a previous version. |
-| **Delete Helm release history** | `helm delete <release-name> --purge` | `helm delete my-nginx --purge` | Deletes a Helm release along with its history. |
+| **Delete Helm release history** | `helm delete <release-name>` | `helm delete my-nginx` | Deletes a Helm release along with its history. |
 
 ---
 
