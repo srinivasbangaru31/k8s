@@ -60,60 +60,6 @@ helm uninstall my-nginx
 
 ---
 
-## **Example 2: Deploy a Custom Application Using Helm**
-### **Step 1: Create a Helm Chart**
-```sh
-helm create my-app
-cd my-app
-```
-It creates a directory structure like:
-```
-my-app/
-├── charts/
-├── templates/
-│   ├── deployment.yaml
-│   ├── service.yaml
-│   ├── ingress.yaml
-│   ├── _helpers.tpl
-│   └── NOTES.txt
-├── values.yaml
-├── Chart.yaml
-└── README.md
-```
-
-### **Step 2: Modify `values.yaml`**
-```yaml
-replicaCount: 2
-image:
-  repository: <aws-account-id>.dkr.ecr.<region>.amazonaws.com/my-app
-  tag: latest
-service:
-  type: LoadBalancer
-  port: 80
-```
-
-### **Step 3: Deploy the Chart to EKS**
-```sh
-helm install my-app ./my-app
-```
-
-### **Step 4: Verify the Deployment**
-```sh
-kubectl get pods
-kubectl get svc
-```
-
-### **Step 5: Upgrade the Application**
-Modify `values.yaml` (change `replicaCount: 3`), then run:
-```sh
-helm upgrade my-app ./my-app
-```
-
-### **Step 6: Rollback to Previous Version**
-```sh
-helm rollback my-app 1
-```
-
 ---
 
 ### **Step by Step guide to install Httpd and delivering""
@@ -244,6 +190,173 @@ To delete the deployment:
 helm uninstall my-httpd
 ```
 
+
+
+
+
+---
+
+### **Deploy a Custom Application Using Helm**
+
+---
+
+# **Helm Chart for Node.js App – Step-by-Step Guide**  
+
+### **Step 1: Create a New Helm Chart**
+Run the following command to create a Helm chart named `mynodeapp`:  
+```sh
+helm create mynodeapp
+```
+
+It creates a directory structure like:
+```
+my-app/
+├── charts/
+├── templates/
+│   ├── deployment.yaml
+│   ├── service.yaml
+│   ├── ingress.yaml
+│   ├── _helpers.tpl
+│   └── NOTES.txt
+├── values.yaml
+├── Chart.yaml
+└── README.md
+```
+
+---
+
+### **Step 2: Update Helm Chart Files**  
+
+## **Update `values.yaml`**  
+Modify `values.yaml` to define service as `NodePort` and set up necessary configurations:  
+```yaml
+replicaCount: 1
+
+image:
+  repository: node
+  pullPolicy: IfNotPresent
+  tag: latest
+
+service:
+  type: NodePort
+  port: 3000
+  nodePort: 32000  # Choose a port in range 30000-32767
+
+ingress:
+  enabled: false
+
+resources: {}
+
+autoscaling:
+  enabled: false
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+```
+
+---
+
+## **Update `templates/deployment.yaml`**  
+Ensure the Deployment file correctly defines the Node.js container:  
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: nodeapp
+  template:
+    metadata:
+      labels:
+        app: nodeapp
+    spec:
+      containers:
+        - name: nodeapp
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 3000
+```
+
+---
+
+## **Update `templates/service.yaml`**  
+Modify `service.yaml` to support both `ClusterIP` and `NodePort`:  
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-service
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: nodeapp
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: 3000
+      {{- if eq .Values.service.type "NodePort" }}
+      nodePort: {{ .Values.service.nodePort }}
+      {{- end }}
+```
+---
+
+### **Step 3: Remove Unnecessary Files**
+Since we are not using a **ServiceAccount** and **HPA**, remove these files:  
+```sh
+rm mynodeapp/templates/serviceaccount.yaml
+rm mynodeapp/templates/hpa.yaml
+```
+
+
+---
+
+### **Step 4: Install or Upgrade the Helm Chart**
+Deploy the Helm chart using:  
+```sh
+helm install my-node-app ./mynodeapp
+```
+If already installed, upgrade with:  
+```sh
+helm upgrade my-node-app ./mynodeapp
+```
+
+---
+
+### **Step 5: Verify the Deployment**
+Check if the pod is running:  
+```sh
+kubectl get pods
+```
+Check the service type:  
+```sh
+kubectl get svc my-node-app-service
+```
+
+---
+
+### **Step 6: Access the Application**
+Find the **Node IP**:  
+```sh
+kubectl get nodes -o wide
+```
+Find the **NodePort**:  
+```sh
+kubectl get svc my-node-app-service -o yaml | grep nodePort
+```
+Access the application:  
+```sh
+curl http://<NODE_IP>:32000
+```
+or open the browser:  
+```
+http://<NODE_IP>:32000
+```
 
 ---
 
