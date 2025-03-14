@@ -66,19 +66,14 @@ helm uninstall my-nginx
 
 ---
 
-## **1. Add the `hackcoderr-httpd` Helm Repository**
-Since you're using the `hackcoderr-httpd/httpd` chart, first add the repository:  
-```sh
-helm repo add hackcoderr-httpd https://hackcoderr.github.io/helm-charts/
-helm repo update
-```
+## **1. Add the Helm Repository**
 
 ---
 
 ## **2. Install the HTTPD Helm Chart**
 Run the following command to deploy Apache (`httpd`):  
 ```sh
-helm install my-httpd hackcoderr-httpd/httpd --version 0.1.0
+helm install my-http-server bitnami/apache
 ```
 This will deploy **httpd** in your Kubernetes cluster.
 
