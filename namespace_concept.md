@@ -101,50 +101,112 @@ spec:
 
 ---
 
-
 ### **Test the ResourceQuota in a Kubernetes Cluster**
 
-1. **Apply the ResourceQuota YAML**
-   ```sh
-   kubectl apply -f - <<EOF
-   apiVersion: v1
-   kind: ResourceQuota
-   metadata:
-     name: dev-namespace-quota
-     namespace: dev-namespace
-   spec:
-     hard:
-       requests.cpu: "2"       
-       requests.memory: "4Gi"  
-       limits.cpu: "4"         
-       limits.memory: "8Gi"    
-   EOF
-   ```
-2. **Verify the ResourceQuota**
-   ```sh
-   kubectl get resourcequota -n dev-namespace
-   ```
+---
 
-   **Expected Output:**
-   ```
-   NAME                    AGE   REQUESTS.CPU   REQUESTS.MEMORY   LIMITS.CPU   LIMITS.MEMORY
-   dev-namespace-quota     10s   2              4Gi              4            8Gi
-   ```
+## **Step 1: Set Namespace-Level Resource Limits (LimitRange)**  
+To enforce resource constraints **at the namespace level**, create a **LimitRange**.
 
-3. **Deploy a Test Pod to Check the Quota**
-   ```sh
-   kubectl run test-pod --image=nginx --requests='cpu=1,memory=2Gi' --limits='cpu=3,memory=6Gi' -n dev-namespace
-   ```
-   This should **work** since the requests and limits are within the quota.
+### **Create a LimitRange for `dev-namespace`**  
+```yaml
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: dev-namespace-limits
+  namespace: dev-namespace
+spec:
+  limits:
+  - default:
+      cpu: "1"      # Max CPU a container can use
+      memory: "1Gi" # Max memory a container can use
+    defaultRequest:
+      cpu: "0.5"    # Default requested CPU
+      memory: "512Mi" # Default requested memory
+    type: Container
+```
 
-4. **Deploy a Pod That Exceeds the Limit**
-   ```sh
-   kubectl run fail-pod --image=nginx --requests='cpu=3,memory=5Gi' --limits='cpu=5,memory=10Gi' -n dev-namespace
-   ```
-   **This should fail** because:
-   - `requests.cpu=3` **exceeds** the allowed `2`.
-   - `requests.memory=5Gi` **exceeds** the allowed `4Gi`.
-   - `limits.cpu=5` **exceeds** the allowed `4`.
-   - `limits.memory=10Gi` **exceeds** the allowed `8Gi`.
+ **Apply the LimitRange**  
+```sh
+kubectl apply -f limitrange.yaml
+```
+
+ **Verify the LimitRange**  
+```sh
+kubectl get limitrange -n dev-namespace
+kubectl describe limitrange dev-namespace-limits -n dev-namespace
+```
+
+---
+
+## **Step 2: Create a Pod (Success Scenario)**
+Now, deploy a pod that **respects** the namespace limits.
+
+### **Success Scenario: Pod within Limits**
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod-success
+  namespace: dev-namespace
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      resources:
+        requests:
+          cpu: "0.5" # Within the allowed limit
+          memory: "512Mi" # Within the allowed limit
+        limits:
+          cpu: "1" # Allowed max CPU
+          memory: "1Gi" # Allowed max memory
+```
+
+**Apply the Pod**  
+```sh
+kubectl apply -f test-pod-success.yaml
+```
+
+**Check Pod Status**  
+```sh
+kubectl get pod -n dev-namespace
+kubectl describe pod test-pod-success -n dev-namespace
+```
+
+---
+
+## **Step 3: Create a Pod (Fail Scenario)**
+Now, deploy a pod that **exceeds** the namespace limits.
+
+### **Fail Scenario: Pod Exceeding Limits**
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod-fail
+  namespace: dev-namespace
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      resources:
+        requests:
+          cpu: "2" # Exceeds the allowed limit (1)
+          memory: "2Gi" # Exceeds the allowed limit (1Gi)
+        limits:
+          cpu: "3" # Exceeds the allowed limit (1)
+          memory: "2Gi" # Exceeds the allowed limit (1Gi)
+```
+
+**Apply the Pod**  
+```sh
+kubectl apply -f test-pod-fail.yaml
+```
+
+**Check Pod Status**  
+```sh
+kubectl get pod -n dev-namespace
+kubectl describe pod test-pod-fail -n dev-namespace
+```
 
 ---
