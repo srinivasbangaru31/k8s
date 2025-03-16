@@ -1,3 +1,26 @@
+# **What is Vertical Pod Autoscaler (VPA)?**  
+Vertical Pod Autoscaler (VPA) is a **Kubernetes component** that **automatically adjusts CPU and memory** requests and limits for running pods. Instead of scaling pods horizontally (adding more replicas), VPA **modifies the resource allocation** of existing pods to optimize performance.
+
+VPA is an open-source project developed by the Kubernetes community and is available on GitHub under the Kubernetes Autoscaler repository.
+
+### **Why is VPA Not Recommended for Production Workloads?**  
+Despite its advantages, VPA has limitations that make it **less suitable for production environments**:
+
+1. **Pod Restarts Are Required**  
+   - VPA **terminates and restarts** pods to apply new resource requests/limits.  
+   - This disrupts running applications and is **not ideal for stateful workloads** or applications requiring **high availability**.
+
+2. **Conflicts with Horizontal Pod Autoscaler (HPA)**  
+   - **HPA and VPA do not work well together** because HPA scales out based on CPU/memory usage, while VPA tries to resize existing pods.  
+   - **Best practice:** Use **HPA for stateless workloads** and **VPA for batch jobs or long-running background processes**.
+
+3. **Unpredictable Scaling Decisions** 
+   - VPA relies on historical usage data, which may **not react quickly** to sudden traffic spikes.  
+   - This can cause **latency issues** in dynamic environments.
+
+4. **Not Supported in Managed Kubernetes Services (EKS, AKS, GKE)** 
+   - AWS EKS, Azure AKS, and Google GKE **do not natively support VPA**, as they encourage **HPA + Cluster Autoscaler** for scaling.
+
 
 # Understanding and Testing Vertical Pod Autoscaler (VPA)
 
