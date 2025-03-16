@@ -104,7 +104,7 @@ spec:
 
 ### **Test the ResourceQuota in a Kubernetes Cluster**
 
-2. **Apply the ResourceQuota YAML**
+1. **Apply the ResourceQuota YAML**
    ```sh
    kubectl apply -f - <<EOF
    apiVersion: v1
@@ -120,7 +120,7 @@ spec:
        limits.memory: "8Gi"    
    EOF
    ```
-3. **Verify the ResourceQuota**
+2. **Verify the ResourceQuota**
    ```sh
    kubectl get resourcequota -n dev-namespace
    ```
@@ -131,13 +131,13 @@ spec:
    dev-namespace-quota     10s   2              4Gi              4            8Gi
    ```
 
-4. **Deploy a Test Pod to Check the Quota**
+3. **Deploy a Test Pod to Check the Quota**
    ```sh
    kubectl run test-pod --image=nginx --requests='cpu=1,memory=2Gi' --limits='cpu=3,memory=6Gi' -n dev-namespace
    ```
    This should **work** since the requests and limits are within the quota.
 
-5. **Deploy a Pod That Exceeds the Limit**
+4. **Deploy a Pod That Exceeds the Limit**
    ```sh
    kubectl run fail-pod --image=nginx --requests='cpu=3,memory=5Gi' --limits='cpu=5,memory=10Gi' -n dev-namespace
    ```
