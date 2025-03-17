@@ -52,4 +52,5 @@ EKS Auto Mode is particularly well-suited for the following use cases:
 To conect to the eks cluster update the kube config
 
 ```
-aws eks --region ap-south-1 update-kubeconfig --name ekswithautomode
+aws eks --region ap-south-1 update-kubeconfig --name <clustername>
+```
