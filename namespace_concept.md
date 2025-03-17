@@ -29,6 +29,22 @@ Namespaces help in **separating and organizing** different workloads efficiently
 
 ---
 
+
+## **Default Namespaces in Kubernetes (EKS)**
+When you create an EKS cluster, it comes with the following **default namespaces**:
+
+| Namespace       | Purpose |
+|----------------|---------|
+| **default**    | Default namespace for all resources when no namespace is specified. |
+| **kube-system** | Contains Kubernetes system components (like CoreDNS, kube-proxy, AWS VPC CNI). Do not delete or modify resources here. |
+| **kube-public** | Publicly readable namespace, often used for cluster-wide info (e.g., discovery). |
+| **kube-node-lease** | Manages node heartbeats to track node availability efficiently. |
+| **aws-observability** (EKS) | Stores AWS Observability components (e.g., Fluent Bit for logging). Only in AWS EKS. |
+
+---
+
+
+
 ### **Demo Deployment File Using Namespace**  
 Below is a **sample YAML file** that creates a **namespace** and deploys an **nginx application** inside it.
 
