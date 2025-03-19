@@ -11,7 +11,7 @@ Ingress is widely used in Kubernetes because it provides a centralized way to ma
  **Reduces Costs** – Eliminates the need to create separate AWS ELBs for each service.  
 
 ---
-![flow-1](https://github.com/user-attachments/assets/0308d3fe-1ef5-4b07-b6a0-836bdf8a4265)
+![flow-new](https://github.com/user-attachments/assets/88a31984-6f95-4667-bde2-40e09e0b9a5c)
 
 ---
 
