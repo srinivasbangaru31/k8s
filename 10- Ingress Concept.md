@@ -44,6 +44,12 @@ In AWS EKS, the AWS Load Balancer Controller supports two modes for managing tra
 2. **IP Mode**  
 
 ---
+
+Underdtand Path Based vs IP Based Routing
+
+![ip-path-png](https://github.com/user-attachments/assets/a0f61d0b-0b8b-40c9-963f-8ff477bcef58)
+
+---
 ![Modes](https://github.com/user-attachments/assets/26853ca3-f76d-4eaf-b52e-8b75a44c8968)
 
 ---
