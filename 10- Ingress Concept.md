@@ -12,6 +12,32 @@ Ingress is widely used in Kubernetes because it provides a centralized way to ma
 
 ---
 
+![Flow](https://github.com/user-attachments/assets/56e10612-c303-4803-b29f-6e5257166eff)
+
+---
+
+### **Components of Ingress in Kubernetes**  
+
+An **Ingress setup** consists of several components:
+
+####  **1. Ingress Resource** (Kubernetes Object)  
+- Defines routing rules, specifying how external traffic reaches services.  
+- Example: Path-based, host-based routing, SSL termination.  
+
+####  **2. Ingress Controller**  
+- The actual implementation that processes Ingress rules and provisions the underlying AWS ALB or NLB.  
+- Example: **AWS Load Balancer Controller**, NGINX Ingress Controller, Traefik.  
+
+####  **3. Load Balancer**  
+- The external AWS **Application Load Balancer (ALB)** or **Network Load Balancer (NLB)** that routes traffic.  
+- The ALB Controller automatically creates and manages this.  
+
+####  **4. Target Groups**  
+- AWS resources that ALB forwards traffic to.  
+- In **Instance Mode**, the target is EC2 instances.  
+- In **IP Mode**, the target is pod IPs.  
+
+---
 ### ** What are the 2 Ingress Controller Modes in AWS EKS?**  
 In AWS EKS, the AWS Load Balancer Controller supports two modes for managing traffic:  
 
@@ -42,29 +68,6 @@ In AWS EKS, the AWS Load Balancer Controller supports two modes for managing tra
 
 ---
 
-### **Components of Ingress in Kubernetes**  
-
-An **Ingress setup** consists of several components:
-
-####  **1. Ingress Resource** (Kubernetes Object)  
-- Defines routing rules, specifying how external traffic reaches services.  
-- Example: Path-based, host-based routing, SSL termination.  
-
-####  **2. Ingress Controller**  
-- The actual implementation that processes Ingress rules and provisions the underlying AWS ALB or NLB.  
-- Example: **AWS Load Balancer Controller**, NGINX Ingress Controller, Traefik.  
-
-####  **3. Load Balancer**  
-- The external AWS **Application Load Balancer (ALB)** or **Network Load Balancer (NLB)** that routes traffic.  
-- The ALB Controller automatically creates and manages this.  
-
-####  **4. Target Groups**  
-- AWS resources that ALB forwards traffic to.  
-- In **Instance Mode**, the target is EC2 instances.  
-- In **IP Mode**, the target is pod IPs.  
-
-
----
 
 # Deploying the 2048 Game on EKS Using AWS Load Balancer Controller
 
