@@ -11,8 +11,7 @@ Ingress is widely used in Kubernetes because it provides a centralized way to ma
  **Reduces Costs** – Eliminates the need to create separate AWS ELBs for each service.  
 
 ---
-
-![Flow](https://github.com/user-attachments/assets/56e10612-c303-4803-b29f-6e5257166eff)
+![flow-1](https://github.com/user-attachments/assets/0308d3fe-1ef5-4b07-b6a0-836bdf8a4265)
 
 ---
 
@@ -43,6 +42,9 @@ In AWS EKS, the AWS Load Balancer Controller supports two modes for managing tra
 
 1. **Instance Mode**  
 2. **IP Mode**  
+
+---
+![Modes](https://github.com/user-attachments/assets/26853ca3-f76d-4eaf-b52e-8b75a44c8968)
 
 ---
 
