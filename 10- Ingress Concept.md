@@ -344,3 +344,36 @@ kubectl describe ingress game-2048-ingress -n 2048-game
 When the ALB is ready, you should see its DNS name in the **Address** field. You can then access the 2048 game in your browser using that DNS name.
 
 ---
+# If you have a Route53 hostedZone and an ACM Certificate to map with alb DNS name, Please deploy below ingress.yml file
+---
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: game-2048-ingress
+  namespace: 2048-game
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:1234567890:certificate/Your-Cert-ARN
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-2-2021-06
+spec:
+  rules:
+  - host: game.learnaws.today
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: game-2048-service
+            port:
+              number: 80
+
+
+```
+
+Then map domain name "game.learnaws.today" at route53 and test the output.
