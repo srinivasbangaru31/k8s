@@ -174,7 +174,7 @@ kubectl describe service nginx-service
 
   ---
 
-### **Create a Service to Expose the Deployment with NodePort Option**
+### **Create a Service to Expose the Deployment with LoadBalancer Option**
 
 #### **`nginx-service-elb.yaml`**
 
