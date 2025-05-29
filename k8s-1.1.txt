@@ -1,0 +1,372 @@
+kubeadm token create --print-join-command
+
+POD
+====
+
+kubectl run testk8s --image=nginx
+kubectl get pods
+kubectl run test1k8s --image=nginx
+kubectl delete pod testk8s
+
+Pods
+Pods are the fundamental building blocks in Kubernetes.
+They are the smallest deployable unit. If, for example, you wanted to run an nginx Docker container then you would actually be running a pod.
+You can tell Kubernetes to run a pod for you with a single command.
+
+kubectl run kuard --generator=run-pod/v1 --image gcr.io/kuar-demo/kuard-amd64:1
+
+This may be a little intimidating so let’s break it down. kubectl is the command-line utility for interacting with your Kubernetes cluster.
+It has a `run` command that will instruct your Kubernetes cluster to run pods. The ----generator=run-pod/v1
+instructs kubectl that we want to run a pod (without a --generator the default is a deployment which we will see later).
+Finally we specify --image=gcr.io/kuar-demo/kuard-amd64:1 so that Kubernetes knows where it can find the Docker image for kuard.
+
+kubectl get pods
+kubectl get pods -o wide
+There are numerous ways to find a pod’s IP address, but the simplest is to specify a “wide” output when getting pod details.
+kubectl port-forward kuard 8080:8080
+This instructs kubectl to make port 8080 on our local machine connect to port 8080 on the container.
+With this, we should be able to navigate to localhost:8080 and see the kuard UI.
+
+kubectl delete pod kuard
+
+kubectl get pods --all-namespaces
+or
+kubectl get pods -A
+
+kubectl get pods -o wide --all-namespaces
+
+kubectl run pod1 --image=tutum/hello-world
+
+kubectl get pods
+kubectl describe pods pod-name
+
+vi pod.yaml
+----------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod1
+  labels:
+    zone: prod
+    version: v1
+spec:
+  containers:
+  - name: container-1
+    image: nginx:latest
+    ports:
+    - containerPort: 8080
+
+
+kubectl create -f pod.yaml
+
+kubectl delete pod pod-name
+or
+kubectl delete -f pod.yml
+
+
+vi pod1.yaml
+-----------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod2
+  labels:
+    app: webapp
+spec:
+  containers:
+  - name: hello-cont1
+    image: tutum/hello-world
+    ports:
+    - containerPort: 83
+
+kubectl create -f pod1.yaml
+
+ReplicaSets:
+==========
+ReplicaSets are a higher-level API that gives you the ability to easily run multiple instances of a given pod. 
+You tell the ReplicaSets the number of pods that you want it to run and it will ensure that the exact number of pods are actually running.
+
+replicaset.yaml
+------------------
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: kuard
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: kuard
+  template:
+    metadata:
+      labels:
+        app: kuard
+    spec:
+      containers:
+      - name: kuard
+        image: tutum/hello-world
+
+kubectl create -f replicaset.yml
+kubectl get pods,replicasets --show-labels
+kubectl delete replicasets kuard
+kubectl apply -f *.yml
+
+As you can see, the ReplicaSet created five pods with the label app=kuard.
+Recall that earlier we said that the ReplicaSet will ensure that the exact number of pods that we asked for are running. 
+Let’s see how good the ReplicaSet is by killing a pod
+
+kubectl delete pod/kuard-fm8fd
+
+Then we check our pods and notice that the ReplicaSet has already replaced the missing pod.
+
+kubectl get pods
+
+kubectl get pods --show-labels
+
+
+Deployments
+===========
+Deployments wrap up Pods and ReplicaSets into a nice package that is capable of deploying your applications.
+The nice thing about Deployments is that they are declarative. 
+We tell Kubernetes what state we would like our application to be in and it figures out how to make that happen.
+Let’s clean up all of our current pods and ReplicaSets and see some Deployment examples.
+	 kuard
+
+kubectl delete pod kuard-xxxx
+
+We will create a Deployment configuration file that defines the same state as our ReplicaSet example.
+Actually, you will notice that the only change between declaring a Deployment and a ReplicaSet is the kind (at least in this example).
+
+deployment.yml
+----------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kuard
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: kuard
+  template:
+    metadata:
+      labels:
+        app: kuard
+    spec:
+      containers:
+      - name: kuard
+        image: nginx:1.20.1
+
+kubectl apply -f deployment.yml
+
+kubectl get deployment,replicaset,pod --show-labels
+
+Creating the Deployment created a ReplicaSet and five pods just like our ReplicaSet example above.
+The difference is that we now have a Deployment object that we can interact with.
+Let’s scale our new Deployment up to ten replicas. We accomplish this by changing the .spec.replicas property. The final YAML will look like so.
+There is a new deployment object that we can interact with now though. Let’s scale up to 10 instances of our application by changing `.spec.replicas` to 10
+
+vi deployment.yml
+-------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy1
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: cont1
+        image: tutum/hello-world
+        ports:
+        - containerPort: 80
+
+
+kubectl apply -f deployment.yml
+kubectl rollout status deployment kuard
+
+
+vi replica1.yaml
+-----------------------
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: app1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: testconatiner
+        image: tutum/hello-world
+        ports:
+        - containerPort: 80
+
+kubectl create -f replica.yaml
+
+vi ri.yaml
+---------------
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: kubia
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kubia
+  template:
+    metadata:
+      labels:
+        app: kubia
+    spec:
+      containers:
+      - name: kubia
+        image: luksa/kubia
+
+kubectl create -f ri.yaml
+kubectl get pods
+
+https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+
+
+https://kubernetes.io/docs/tutorials/kubernetes-basics/create-cluster/cluster-intro/
+
+Service:
+=========
+
+pod.yml
+=======
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod2
+  labels:
+    zone: prod
+    version: v1
+    app: webapp
+spec:
+  containers:
+  - name: hello-cont1
+    image: tutum/hello-world
+    ports:
+    - containerPort: 80 
+
+service.yml
+===========
+apiVersion: v1
+kind: Service
+metadata:
+  name: service1
+spec:
+    type: NodePort
+    ports:
+     - targetPort: 80
+       port: 80
+       nodePort: 30008
+    selector:
+       app: webapp
+
+
+Daemonsets:
+============
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kuard
+spec:
+  selector:
+    matchLabels:
+      app: kuard
+  template:
+    metadata:
+      labels:
+        app: kuard
+    spec:
+      containers:
+      - name: kuard
+        image: tutum/hello-world
+
+
+ConfigMaps
+===========
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  batch: "k8s82"
+  year: "2022"
+
+
+calling in pod
+-----------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod3
+  labels:
+    zone: prod
+    version: v1
+    app: webapp
+spec:
+  containers:
+  - name: hello-cont2
+    image: tutum/hello-world
+    ports:
+    - containerPort: 80
+    envFrom:
+      - configMapRef:
+           name: app-config
+
+
+
+Secrets
+========
+apiVersion: v1
+data:
+  username: YWRtaW4=
+  password: MWYyZDFlMmU2N2Rm
+kind: Secret
+metadata:
+  name: mysecret
+  namespace: default
+
+
+calling in pod
+----------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod3
+  labels:
+    zone: prod
+    version: v1
+    app: webapp
+spec:
+  containers:
+  - name: hello-cont2
+    image: tutum/hello-world
+    ports:
+    - containerPort: 80
+    envFrom:
+      - secretRef:
+           name: mysecret
+
